@@ -13,3 +13,9 @@
  *= require_tree .
  *= require_self
  */
+.flight{
+    margin: 20px;
+    padding: 20px;
+    border: 1px black solid;
+    border-radius: 5%;
+}
