@@ -11,22 +11,23 @@
   Airport.find_or_create_by!(code: code)
 end
 
-flight_data = [
-  { departure_code: "SFO", arrival_code: "NYC", start: DateTime.new(2024, 3, 25, 8, 0, 0), duration: 360 },
-  { departure_code: "KE", arrival_code: "PG", start: DateTime.new(2024, 3, 25, 9, 0, 0), duration: 300 },
-  { departure_code: "CA", arrival_code: "BU", start: DateTime.new(2024, 3, 25, 10, 0, 0), duration: 420 },
-  # Add more flight data as needed
-]
+departure_codes = ["SFO", "KE", "CA", "NYC", "PG", "BU","NYC", "PG", "BU", "SFO", "KE", "CA"]
+arrival_codes = ["NYC", "PG", "BU", "SFO", "KE", "CA","SFO", "KE", "CA", "NYC", "PG", "BU"]
 
-# Create flights using the flight data
-flight_data.each do |flight|
-  departure_airport = Airport.find_by(code: flight[:departure_code])
-  arrival_airport = Airport.find_by(code: flight[:arrival_code])
+# Create 20 flight records with unique data
+100.times do |i|
+  departure_code = departure_codes.sample # Cycle through departure codes
+  arrival_code = arrival_codes.sample # Cycle through arrival codes
+  start_time = Date.today # Increment start time for each flight
+  duration = i * 60 # Vary duration for each flight
+
+  departure_airport = Airport.find_by(code: departure_code)
+  arrival_airport = Airport.find_by(code: arrival_code)
 
   Flight.find_or_create_by!(
     departure_airport_id: departure_airport.id,
     arrival_airport_id: arrival_airport.id,
-    start: flight[:start],
-    duration: flight[:duration]
+    start: start_time,
+    duration: duration
   )
 end

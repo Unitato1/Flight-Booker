@@ -1,21 +1,24 @@
-<%= form_with url: "/flights", method: :get do |form| %>
+<%= form_with url: "/flights/", method: :get do |form| %>
   <div>
-  <%= form.label :departure_airport_id, "Departure airport:" %>
-  <%= select_tag(:departure_airport_id, options_for_select(@airports)) %>
+  <%= form.label :departure_airport_code, "Departure airport:" %>
+  <%= select_tag(:departure_airport_code, options_for_select(@airports, params[:departure_airport_code])) %>
+</div>
+  <div>
+  <%= form.label :arrival_airport_code, "Arrival airport:" %>
+  <%= select_tag(:arrival_airport_code, options_for_select(@airports, params[:arrival_airport_code])) %>
 </div>
 <div>
-  <%= form.label :arrival_airport_id, "Arrival airport:" %>
-  <%= select_tag(:arrival_airport_id, options_for_select(@airports)) %>
+  <%= form.label :num_tickets, "How many people:" %>
+  <%= select_tag(:num_tickets, options_for_select( 4.times.map {|i| [i + 1, i + 1]}, params[:num_tickets])) %>
 </div>
 <div>
   <%= form.label :departure_date, "Date of departure:" %>
-  <%= select_tag(:departure_date, options_for_select(@dates)) %>
-</div>
-<div>
-  <%= form.label :arrival_date, "Date of arrival:" %>
-  <%= select_tag(:arrival_date, options_for_select(@dates)) %>
+<%= select_tag(:departure_date, options_for_select(@dates, params[:departure_date]), include_blank: true) %>
 </div>
   <%= form.submit "Search" %>
+<% end %>
+<% if @no_found %>
+    <%= @no_found %>
 <% end %>
 <% @flights.each do |flight|%>
   <div class="flight">

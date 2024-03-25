@@ -1,12 +1,15 @@
 class FlightsController < ApplicationController
   def index
-    puts search_params
-    @flights = Flight.all
+
+    @flights = Flight.find_matching(params[:departure_airport_code], params[:arrival_airport_code], params[:num_tickets], params[:departure_date])
+    if !(@flights)
+      @flights = Flight.all
+    end
     @airports = Airport.all.map{ |a| [a.code, a.code]}
-    @dates = Flight.all.map{ |f| [f.start.strftime("%m/%d/%Y"), f.start]}
+    @dates = Flight.all.map{ |f| [f.start.strftime("%m/%d/%Y"), f.start]}.uniq
   end
   private
   def search_params
-    params.permit(:departure_airport_id, :arrival_airport_id, :departure_date, :arrival_date)
+    params.permit(:departure_airport_code, :arrival_airport_code, :num_tickets, :departure_date)
   end
 end

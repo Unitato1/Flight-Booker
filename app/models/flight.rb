@@ -1,6 +1,8 @@
 class Flight < ApplicationRecord
-  def find_matching(departure, arival, departure_date, arival_date)
-    where(departure_airport_id: departure)
+  def self.find_matching(departure, arrival, tickets, departure_date)
+    where(departure_airport_id: Airport.find_by(code: departure),
+          arrival_airport_id: Airport.find_by(code: arrival),
+          start: DateTime.parse(departure_date).all_day) if departure_date
   end
   belongs_to :arrival_airport, class_name: "Airport", foreign_key: "arrival_airport_id"
   belongs_to :departure_airport, class_name: "Airport", foreign_key: "departure_airport_id"
