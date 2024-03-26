@@ -6,7 +6,7 @@ class FlightsController < ApplicationController
       @flights = Flight.all
     end
     @airports = Airport.all.map{ |a| [a.code, a.code]}
-    @dates = Flight.all.map{ |f| [f.start.strftime("%m/%d/%Y"), f.start]}.uniq
+    @dates = Flight.all.map{ |f| [f.start.strftime("%m/%d/%Y %H:%M"), f.start]}
   end
   private
   def search_params

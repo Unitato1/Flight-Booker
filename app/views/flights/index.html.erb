@@ -17,6 +17,7 @@
 </div>
   <%= form.submit "Search" %>
 <% end %>
+<%= link_to "All flights", flights_path %>
 <% if @no_found %>
     <%= @no_found %>
 <% end %>

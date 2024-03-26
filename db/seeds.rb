@@ -11,16 +11,16 @@
   Airport.find_or_create_by!(code: code)
 end
 
-departure_codes = ["SFO", "KE", "CA", "NYC", "PG", "BU","NYC", "PG", "BU", "SFO", "KE", "CA"]
-arrival_codes = ["NYC", "PG", "BU", "SFO", "KE", "CA","SFO", "KE", "CA", "NYC", "PG", "BU"]
+departure_codes = ["SFO", "NYC", "KE", "PG", "CA", "BU", "FA"]
+arrival_codes = ["SFO", "NYC", "KE", "PG", "CA", "BU", "FA"]
 
 # Create 20 flight records with unique data
-100.times do |i|
+300.times do |i|
   departure_code = departure_codes.sample # Cycle through departure codes
-  arrival_code = arrival_codes.sample # Cycle through arrival codes
-  start_time = Date.today # Increment start time for each flight
-  duration = i * 60 # Vary duration for each flight
 
+  while ((arrival_code = arrival_codes.sample) == departure_code)do end # Cycle through arrival codes
+  start_time = DateTime.now # Increment start time for each flight
+  duration = i * 60 # Vary duration for each flight
   departure_airport = Airport.find_by(code: departure_code)
   arrival_airport = Airport.find_by(code: arrival_code)
 
@@ -29,5 +29,5 @@ arrival_codes = ["NYC", "PG", "BU", "SFO", "KE", "CA","SFO", "KE", "CA", "NYC", 
     arrival_airport_id: arrival_airport.id,
     start: start_time,
     duration: duration
-  )
+    )
 end
